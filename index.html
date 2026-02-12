@@ -12,11 +12,6 @@ body {
   overflow: hidden;
   text-align: center;
 }
-
-h1, h2, p {
-  margin: 10px;
-}
-
 .big-heart {
   font-size: 150px;
   color: red;
@@ -25,71 +20,12 @@ h1, h2, p {
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   animation: heart-pop 1s forwards;
-  z-index: 1;
 }
-
 @keyframes heart-pop {
   0% { transform: translate(-50%, -50%) scale(0); opacity: 0;}
   50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1;}
   100% { transform: translate(-50%, -50%) scale(1); opacity: 1;}
 }
-
-#clickButton, #valentineQuestion, #loveNote {
-  display: none;
-  margin-top: 20px;
-  opacity: 0;
-  transition: opacity 1s;
-  position: relative;
-  z-index: 2;
-}
-
-#message {
-  display: none;
-  font-size: 22px;
-  color: #333;
-  max-width: 600px;
-  margin: 20px auto;
-  opacity: 0;
-  transition: opacity 1s;
-  position: relative;
-  z-index: 2;
-}
-
-#floatingHearts div {
-  position: absolute;
-  font-size: 30px;
-  pointer-events: none;
-  animation-name: float;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  z-index: 0;
-}
-
-@keyframes float {
-  0% {transform: translateY(100vh) rotate(0deg);}
-  100% {transform: translateY(-50px) rotate(360deg);}
-}
-
-/* Heart-shaped photo */
-.heart-frame {
-  width: 200px;
-  height: 200px;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  overflow: hidden;
-  display: none;
-  margin: 20px auto;
-  opacity: 0;
-  transition: opacity 1s;
-  position: relative;
-  z-index: 2;
-}
-
-.heart-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 button {
   padding: 12px 25px;
   background: #ff4d6d;
@@ -98,153 +34,123 @@ button {
   border-radius: 20px;
   font-size: 18px;
   cursor: pointer;
-  transition: 0.3s;
   margin: 10px;
 }
-
-button:hover {
-  background-color: #e60039;
+button:hover { background-color: #e60039; }
+#clickButton, #valentineQuestion, #loveNote, #message, .heart-frame {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
-
-/* Sparkling hearts animation */
-.spark-heart {
+.heart-frame {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  overflow: hidden;
+  clip-path: polygon(
+    50% 0%, 61% 12%, 75% 12%, 88% 25%,
+    88% 38%, 75% 50%, 50% 80%, 25% 50%,
+    12% 38%, 12% 25%, 25% 12%, 39% 12%
+  );
+}
+.heart-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#floatingHearts div {
   position: absolute;
-  font-size: 25px;
-  animation: sparkUp linear forwards;
+  font-size: 30px;
   pointer-events: none;
+  animation: float 5s linear infinite;
 }
-
-@keyframes sparkUp {
-  0% {transform: translateY(0) scale(1); opacity: 1;}
-  100% {transform: translateY(-400px) scale(1.5); opacity: 0;}
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(0deg); }
+  100% { transform: translateY(-50px) rotate(360deg); }
 }
 </style>
 </head>
 <body>
 
-<!-- Soft background music -->
+<!-- Background music -->
 <audio id="bgMusic" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2025/02/20/audio_291678.mp3?filename=i-wanna-be-yours-291678.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Big heart at start -->
+<!-- Start Animation -->
 <div class="big-heart" id="bigHeart">❤️</div>
-
-<!-- Click button to show message -->
 <button id="clickButton">Click Here 💌</button>
 
-<!-- Message -->
 <div id="message">
   <p>Hi Nishan ❤️</p>
   <p>Ever since you came into my life, every day feels magical.</p>
   <p>Thank you for your laughter, your hugs, your silly jokes, and all the little things you do that make me smile 😊.</p>
 </div>
 
-<!-- Floating hearts container -->
 <div id="floatingHearts"></div>
 
-<!-- Heart-shaped photo -->
 <div class="heart-frame" id="heartPhoto">
   <img src="https://i.imgur.com/HIAa5zW.jpeg" alt="Us">
 </div>
 
-<!-- Valentine question -->
 <div id="valentineQuestion">
   <h2>Will you be my Valentine? 💌</h2>
   <button id="yesBtn">Yes ❤️</button>
   <button id="noBtn">No 😢</button>
 </div>
 
-<!-- Hidden love note -->
 <div id="loveNote">
   <h2>💕 I love you forever, Nishan! 💕</h2>
   <p>You are my happiness, my warmth, my everything. Can't wait to make more memories with you!</p>
 </div>
 
 <script>
-// Step 1: Show "Click Here" button after big heart animation
+// Show Click Button
 setTimeout(() => {
-  const btn = document.getElementById('clickButton');
-  btn.style.display = 'inline-block';
-  setTimeout(() => { btn.style.opacity = 1; }, 50);
+  document.getElementById('clickButton').style.opacity = 1;
 }, 1200);
 
-// Step 2: On click, show message, photo, and start music
-document.getElementById('clickButton').addEventListener('click', () => {
+// On Click: Play Music & Show Content
+document.getElementById('clickButton').onclick = function () {
   document.getElementById('clickButton').style.display = 'none';
-
-  // Play music
   document.getElementById('bgMusic').play();
 
-  // Show message
-  const msg = document.getElementById('message');
-  msg.style.display = 'block';
-  setTimeout(() => { msg.style.opacity = 1; }, 50);
+  document.getElementById('message').style.opacity = 1;
+  document.getElementById('heartPhoto').style.opacity = 1;
 
-  // Show heart photo
-  const heartPhoto = document.getElementById('heartPhoto');
-  heartPhoto.style.display = 'block';
-  setTimeout(() => { heartPhoto.style.opacity = 1; }, 50);
+  // Hide photo after 5 sec
+  setTimeout(() => { document.getElementById('heartPhoto').style.opacity = 0; }, 5000);
 
-  // Hide photo after 5 seconds
-  setTimeout(() => { 
-    heartPhoto.style.opacity = 0;
-    setTimeout(() => { heartPhoto.style.display='none'; }, 1000);
-  }, 5000);
-
-  // Start floating hearts after 5 seconds
-  setTimeout(startFloatingHearts, 5000);
-
-  // Show Valentine question after 5 seconds
+  // Floating hearts
   setTimeout(() => {
-    const valQ = document.getElementById('valentineQuestion');
-    valQ.style.display = 'block';
-    setTimeout(() => { valQ.style.opacity = 1; }, 50);
+    for(let i=0; i<30; i++){
+      const h = document.createElement('div');
+      h.innerText = '❤️';
+      h.style.left = Math.random()*window.innerWidth + 'px';
+      document.getElementById('floatingHearts').appendChild(h);
+    }
   }, 5000);
-});
 
-// Step 3: Floating hearts
-function startFloatingHearts() {
-  const container = document.getElementById('floatingHearts');
-  for(let i=0;i<40;i++){
-    const heart = document.createElement('div');
-    heart.innerText = '❤️';
-    heart.style.left = Math.random()*window.innerWidth + 'px';
-    heart.style.fontSize = Math.random()*30 + 20 + 'px';
-    heart.style.animationDuration = (Math.random()*3 + 2) + 's';
-    container.appendChild(heart);
-  }
-}
+  // Show question
+  setTimeout(() => { document.getElementById('valentineQuestion').style.opacity = 1; }, 5000);
+};
 
-// Step 4: YES and NO buttons
-document.getElementById('yesBtn').addEventListener('click', () => {
+// Yes/No Buttons
+document.getElementById('yesBtn').onclick = function () {
   document.getElementById('valentineQuestion').style.display = 'none';
-  const loveNote = document.getElementById('loveNote');
-  loveNote.style.display = 'block';
-  setTimeout(() => { loveNote.style.opacity = 1; }, 50);
-
-  // Start sparkling hearts
-  startSparkHearts();
-});
-
-document.getElementById('noBtn').addEventListener('click', () => {
-  alert('Oh no 😢 I will still love you forever ❤️');
-});
-
-// Step 5: Sparkling hearts animation after YES
-function startSparkHearts() {
-  for(let i=0;i<50;i++){
-    const spark = document.createElement('div');
-    spark.classList.add('spark-heart');
-    spark.innerText = '💖';
-    spark.style.left = Math.random()*window.innerWidth + 'px';
-    spark.style.animationDuration = (Math.random()*2 + 2) + 's';
-    document.body.appendChild(spark);
-
-    // Remove after animation
-    setTimeout(() => { spark.remove(); }, 2500);
+  document.getElementById('loveNote').style.opacity = 1;
+  // Sparkle hearts
+  for(let i=0; i<50; i++){
+    const s = document.createElement('div');
+    s.innerText = '💖';
+    s.style.left = Math.random()*window.innerWidth + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 3000);
   }
-}
+};
+
+document.getElementById('noBtn').onclick = function () {
+  alert("Oh no 😢 I will still love you forever ❤️");
+};
 </script>
 
 </body>

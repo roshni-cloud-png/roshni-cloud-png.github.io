@@ -3,48 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <title>For Nishan 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
   margin: 0;
   padding: 0;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
-  overflow: hidden;
+  overflow-x: hidden;
   text-align: center;
 }
+
 .big-heart {
-  font-size: 150px;
+  font-size: 25vw; /* responsive to mobile */
   color: red;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   animation: heart-pop 1s forwards;
+  z-index: 1;
 }
+
 @keyframes heart-pop {
   0% { transform: translate(-50%, -50%) scale(0); opacity: 0;}
   50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1;}
   100% { transform: translate(-50%, -50%) scale(1); opacity: 1;}
 }
+
 button {
-  padding: 12px 25px;
+  padding: 14px 28px;
   background: #ff4d6d;
   color: white;
   border: none;
-  border-radius: 20px;
-  font-size: 18px;
+  border-radius: 25px;
+  font-size: 5vw; /* responsive font for mobile */
   cursor: pointer;
   margin: 10px;
 }
 button:hover { background-color: #e60039; }
+
 #clickButton, #valentineQuestion, #loveNote, #message, .heart-frame {
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
+
+#message p {
+  font-size: 5vw; /* bigger text for mobile */
+  margin: 1vw 5vw;
+}
+
 .heart-frame {
-  width: 200px;
-  height: 200px;
-  margin: 20px auto;
+  width: 60vw; /* responsive heart photo */
+  height: 60vw;
+  margin: 5vw auto;
   overflow: hidden;
   clip-path: polygon(
     50% 0%, 61% 12%, 75% 12%, 88% 25%,
@@ -52,31 +64,38 @@ button:hover { background-color: #e60039; }
     12% 38%, 12% 25%, 25% 12%, 39% 12%
   );
 }
+
 .heart-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 #floatingHearts div {
   position: absolute;
-  font-size: 30px;
+  font-size: 8vw; /* mobile-friendly size */
   pointer-events: none;
   animation: float 5s linear infinite;
 }
+
 @keyframes float {
   0% { transform: translateY(100vh) rotate(0deg); }
   100% { transform: translateY(-50px) rotate(360deg); }
+}
+
+#loveNote h2, #loveNote p {
+  font-size: 5vw; /* mobile-friendly font */
+  margin: 2vw;
 }
 </style>
 </head>
 <body>
 
-<!-- Background music -->
+<!-- Background music: replace YOUR_MP3_LINK_HERE with your GitHub MP3 link -->
 <audio id="bgMusic" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2025/02/20/audio_291678.mp3?filename=i-wanna-be-yours-291678.mp3" type="audio/mpeg">
+  <source src="YOUR_MP3_LINK_HERE.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Start Animation -->
 <div class="big-heart" id="bigHeart">❤️</div>
 <button id="clickButton">Click Here 💌</button>
 
